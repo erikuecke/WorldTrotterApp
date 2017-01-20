@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConversionViewController: UIViewController, UITextFieldDelegate {
+class ConversionViewController: UIViewController, UITextFieldDelegate  {
     
     @IBOutlet var celsiusLabel: UILabel!
     var fahrenheitValue: Measurement<UnitTemperature>? {
@@ -75,9 +75,14 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         
         let existingTextHasDecimalSeparator = textField.text?.range(of: ".")
         let replacementTextHasDecimalSeparator = string.range(of: ".")
+        let letters = NSCharacterSet.letters
         
         if existingTextHasDecimalSeparator != nil, replacementTextHasDecimalSeparator != nil {
             return false
+ // The letters property of the NSCharacterSet class was used to return false if user attempted to enter text. 
+        } else if string.rangeOfCharacter(from: letters) != nil {
+            return false
+        
         } else {
             return true
         }
