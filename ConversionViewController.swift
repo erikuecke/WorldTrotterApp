@@ -54,8 +54,20 @@ class ConversionViewController: UIViewController, UITextFieldDelegate  {
         textField.resignFirstResponder()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        let date = Date()
+        let hour = Calendar.current.component(.hour, from: date)
+        
+        if hour > 13 || hour < 6 {
+            self.view.backgroundColor = UIColor.darkGray
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Testing viewcontrollers loading with lazy loading & tabbar
+        print("ConverViewController loaded its view")
+        
         updateCelsiusLabel()
     }
     
