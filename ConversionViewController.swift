@@ -43,11 +43,19 @@ class ConversionViewController: UIViewController, UITextFieldDelegate  {
 //            celsiusLabel.text = "???"
 //        }
         
-        if let text = textField.text, let value = Double(text) {
-            fahrenheitValue = Measurement(value: value, unit: .fahrenheit)
+//        if let text = textField.text, let value = Double(text) {
+//            fahrenheitValue = Measurement(value: value, unit: .fahrenheit)
+//        } else {
+//            fahrenheitValue = nil
+//        }
+        
+        // Converting the text field's string into a number in a locale-independent way
+        if let text = textField.text, let number = numberFormatter.number(from: text) {
+            fahrenheitValue = Measurement(value: number.doubleValue, unit: .fahrenheit)
         } else {
             fahrenheitValue = nil
         }
+        
     }
     
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
@@ -85,8 +93,17 @@ class ConversionViewController: UIViewController, UITextFieldDelegate  {
 //        print("Replacement text: \(string)")
 //        return true
         
-        let existingTextHasDecimalSeparator = textField.text?.range(of: ".")
-        let replacementTextHasDecimalSeparator = string.range(of: ".")
+//        let existingTextHasDecimalSeparator = textField.text?.range(of: ".")
+//        let replacementTextHasDecimalSeparator = string.range(of: ".")
+        
+        // Updating decimalSeperator for internationalization
+        
+        let currentLocale = Locale.current
+        let decimalSeparator = currentLocale.decimalSeparator ?? "."
+        
+        let existingTextHasDecimalSeparator = textField.text?.range(of: decimalSeparator)
+        let replacementTextHasDecimalSeparator = string.range(of: decimalSeparator)
+        
         let letters = NSCharacterSet.letters
         
         if existingTextHasDecimalSeparator != nil, replacementTextHasDecimalSeparator != nil {
